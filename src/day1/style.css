@@ -1,0 +1,43 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: #FEFEE3;
+}
+.peopleTitle{
+    margin-top: 5px;
+}
+main{
+    background-color: #4C956C;
+    width: 30rem; 
+    height: 53rem;
+    position: relative;
+    top: 20px;
+    margin:auto;
+    color: #FFC9B9;
+    box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.59);
+    font-size: 20px;
+}
+button{
+    outline: none;
+    width: 350px;
+    height: 50px;
+    background-color: #D68C45;
+    font-size: 2rem;
+    margin: 0.1rem;
+}
+.peopleDiv{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto;   
+    gap: 5px;
+    margin-bottom: 1rem;
+    margin-top: 50px;
+}
+img{
+    width: 85px;
+    height: 85px;
+    margin-left: 50px;
+}
