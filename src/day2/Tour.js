@@ -1,6 +1,6 @@
 import React,{useState} from "react";
 
-const Tour = ({ tour }) => {
+const Tour = ({ tour,removeTour,key }) => {
   console.log(tour);
   const [readMore, setreadMore] = useState(false);
   return (
@@ -18,6 +18,7 @@ const Tour = ({ tour }) => {
           <p class="font-normal text-gray-700 mb-3">
             {readMore? tour.info : `${tour.info.substring(0, 200)}...`}
           </p>
+          <span className="flex justify-between">
           <button
               type="button"
               className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"   
@@ -25,6 +26,16 @@ const Tour = ({ tour }) => {
             >
               {readMore ? 'show less' : 'read more..'}
             </button>
+
+            <button
+              type="button"
+              className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"   
+              onClick={()=>removeTour(tour.id)}
+            >
+              not interested
+            </button>
+          </span>
+         
         </div>
       </div>
      
