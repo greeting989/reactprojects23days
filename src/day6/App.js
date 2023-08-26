@@ -1,81 +1,35 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "./Navbar";
-import { recipeService } from "./services/recipefinder";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import axios from "axios";
+
+import Home from "./Pages/Home";
+import About from "./Pages/About";
+
 const App = () => {
-  const [showRes, setshowRes] = useState(false);
-  const [showbtn, setshowbtn] = useState(false);
- 
-  console.log(recipeService())
-
-  function ShowInputBox() {
-    return (
-      <div className="flex flex-row ">
-        <div class=" text-lg bg-white text-gray-800 w-11/12 m-auto p-2 rounded">
-          <input
-            class="bg-transparent border-none mr-3 px-2 leading-tight  focus:outline-none "
-            type="text"
-            placeholder="Search"
-           
-           
-          />
-        </div>
-        <button
-          className="bg-indigo-500 text-white ml-1 mt-2 p-1  rounded-full hover:bg-indigo-600"
-          onClick={() => {
-            setshowRes(showRes);
-          }}
-        >
-          Go find recipes
-        </button>
-      </div>
-    );
-  }
-  function Header() {
-    const url = "https://source.unsplash.com/random";
-    return (
-      <div
-        className="h-3/6 bg-gray-50 flex items-center"
-        style={{
-          backgroundImage:
-            "url(" +
-            "https://images.pexels.com/photos/708777/pexels-photo-708777.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" +
-            ")",
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
-        <section className="w-full bg-cover bg-center py-32">
-          <div className="container mx-auto text-center text-white">
-            <h1 className="text-6xl font-medium mb-6">
-              Welcome to RecipeFinder
-            </h1>
-            <p className="text-2xl mb-12">
-              “There is no love sincerer than the love of food.”
-            </p>
-            {showRes && <ShowInputBox />}
-            {showbtn || (
-              <button
-                className="bg-indigo-500 text-white mt-2 py-4 px-12 rounded-full hover:bg-indigo-600"
-                onClick={() => {
-                  setshowRes(!showRes);
-                  setshowbtn(!showbtn);
-                }}
-              >
-                Search
-              </button>
-            )}
-          </div>
-        </section>
-      </div>
-    );
-  }
-
+  const [searchResult, setSearchResult] = useState([]);
+  const [query, setQuery] = useState("chicken")
+  const [searchInput, setsearchInput] = useState("")
+  const recipeFinder = () => {
+    axios
+      .get(
+        `https://api.edamam.com/api/recipes/v2?q=${query}&app_key=5ca92416e1c7d5789471fcf21408ab8a&_cont=CHcVQBtNNQphDmgVQ3tAEX4BYlB7GgQEQ2dFB2cSZVNzBQYPUXlSAzRAZlZ6AwMOEW0TAmZHZFZ0AgtVSjFHC2YWMV1wUQcVLnlSVSBMPkd5BgMbUSYRVTdgMgksRlpSAAcRXTVGcV84SU4%3D&type=public&app_id=4f0970bd`
+      )
+      .then((response) => {
+        setQuery(searchInput);
+        setSearchResult(response.data.hits);      
+      });
+  };
+  useEffect(() => {
+    recipeFinder();
+  }, [query])
+  
   return (
-    <div>
-      <Navbar />
-      <Header />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home searchInput={searchInput} setQuery={setQuery} setsearchInput={setsearchInput} recipeFinder={recipeFinder} searchResult={searchResult} />}/>
+        <Route path="/aboutus" element={<About/>}/>
+      </Routes>
+    </BrowserRouter>
   );
 };
 
